@@ -1,0 +1,83 @@
+{
+  "id": "blog-blogservice-master-controller",
+  "apiVersion": "v1beta1",
+  "kind": "ReplicationController",
+  "desiredState": {
+    "replicas": 1,
+    "replicaSelector": {
+      "name": "blog-blogservice-master"
+    },
+    "podTemplate": {
+      "desiredState": {
+        "manifest": {
+          "id": "blog-blogservice-master",
+          "version": "v1beta1",
+          "containers": [
+            {
+              "name": "blog-blogservice-master",
+              "image": "wildfly",
+              "volumeMounts": [
+                {
+                  "name": "blog-blogservice-deployment-persistent",
+                  "mountPath": "/opt/jboss/wildfly/standalone/deployments"
+                },
+                {
+                  "name": "blog-blogservice-configuration-persistent",
+                  "mountPath": "/opt/jboss/wildfly/standalone/configuration"
+                },
+                {
+                  "name": "blog-blogservice-modules-persistent",
+                  "mountPath": "/opt/jboss/wildfly/modules"
+                }
+              ],
+              "ports": [
+                {
+                  "name": "app-port",
+                  "containerPort": 8080
+                },
+                {
+                  "name": "management-port",
+                  "containerPort": 9990
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "blog-blogservice-deployment-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/blogservice-deployment"
+                }
+              }
+            },
+            {
+              "name": "blog-blogservice-configuration-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/blogservice-configuration"
+                }
+              }
+            },
+            {
+              "name": "blog-blogservice-modules-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/blogservice-modules"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "labels": {
+        "name": "blog-blogservice-master",
+        "uses": "blog-db-master",
+        "app": "blog"
+      }
+    }
+  },
+  "labels": {
+    "name": "blog-blogservice-master"
+  }
+}

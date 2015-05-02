@@ -1,0 +1,43 @@
+{
+  "apiVersion": "v1beta1",
+  "kind": "Pod",
+  "id": "nfs-test-client",
+  "desiredState": {
+    "manifest": {
+      "containers": [
+        {
+          "name": "nfs-test-client",
+          "image": "nginx",
+          "volumeMounts": [
+            {
+              "name": "nfs",
+              "mountPath": "/var/www/html"
+            }
+          ],
+          "ports": [
+            {
+              "name": "nfs-test-port",
+              "containerPort": 80,
+              "protocol": "tcp"
+            }
+          ]
+        }
+      ],
+      "volumes": [
+        {
+          "name": "nfs",
+          "source": {
+            "nfs": {
+              "server": "172.17.0.3",
+              "path": "/",
+              "readOnly": false
+            }
+          }
+        }
+      ]
+    }
+  },
+  "labels": {
+    "role": "nfs-server"
+  }
+}

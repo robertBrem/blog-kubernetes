@@ -1,0 +1,13 @@
+{
+  "id": "blog-db-master",
+  "apiVersion": "v1beta1",
+  "kind": "Service",
+  "port": 5432,
+  "labels": {
+    "name": "blog-db-master"
+  },
+  "selector": {
+    "name": "blog-db-master"
+  },
+  "containerPort": 5432
+}

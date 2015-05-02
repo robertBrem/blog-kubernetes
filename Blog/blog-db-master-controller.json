@@ -1,0 +1,53 @@
+{
+  "id": "blog-db-master-controller",
+  "kind": "ReplicationController",
+  "apiVersion": "v1beta1",
+  "desiredState": {
+    "replicas": 1,
+    "replicaSelector": {"name": "blog-db-master"},
+    "podTemplate": {
+      "desiredState": {
+        "manifest": {
+          "version": "v1beta1",
+          "id": "blog-db-master",
+          "containers": [
+            {
+              "name": "blog-db-master",
+              "image": "postgres",
+              "volumeMounts": [
+                {
+                  "name": "blog-db-persistent",
+                  "mountPath": "/var/lib/postgresql/data"
+                }
+              ],
+              "ports": [
+                {
+                  "containerPort": 5432
+                }
+              ],
+              "env": [
+                {
+                  "name": "POSTGRES_PASSWORD",
+                  "value": "postgres"
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "blog-db-persistent",
+              "source": {"hostDir": {"path": "/home/user/static-volumes/blog-db"}}
+            }
+          ]
+        }
+      },
+      "labels": {
+        "name": "blog-db-master",
+        "app": "blog"
+      }
+    }
+  },
+  "labels": {
+    "name": "blog-db-master"
+  }
+}

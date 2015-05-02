@@ -1,0 +1,14 @@
+{
+  "id": "blog-blogservice-master",
+  "apiVersion": "v1beta1",
+  "kind": "Service",
+  "port": 8082,
+  "containerPort": 8080,
+  "publicIPs": ["104.167.112.27"],
+  "labels": {
+    "name": "blog-blogservice-master"
+  },
+  "selector": {
+    "name": "blog-blogservice-master"
+  }
+}
