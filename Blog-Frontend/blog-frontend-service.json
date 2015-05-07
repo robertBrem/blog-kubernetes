@@ -1,0 +1,14 @@
+{
+  "id": "blog-frontend",
+  "apiVersion": "v1beta1",
+  "kind": "Service",
+  "port": 8000,
+  "containerPort": 8000,
+  "publicIPs": ["104.167.112.27"],
+  "labels": {
+    "name": "blog-frontend"
+  },
+  "selector": {
+    "name": "blog-frontend"
+  }
+}

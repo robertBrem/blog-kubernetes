@@ -1,0 +1,55 @@
+{
+  "id": "blog-frontend-controller",
+  "apiVersion": "v1beta1",
+  "kind": "ReplicationController",
+  "desiredState": {
+    "replicas": 1,
+    "replicaSelector": {
+      "name": "blog-frontend"
+    },
+    "podTemplate": {
+      "desiredState": {
+        "manifest": {
+          "id": "blog-frontend",
+          "version": "v1beta1",
+          "containers": [
+            {
+              "name": "blog-frontend",
+              "image": "bower_node",
+              "volumeMounts": [
+                {
+                  "name": "blog-frontend-app-persistent",
+                  "mountPath": "/usr/src/app"
+                }
+              ],
+              "ports": [
+                {
+                  "name": "app-port",
+                  "containerPort": 8000
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "blog-frontend-app-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/blog-frontend-app"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "labels": {
+        "name": "blog-frontend",
+        "uses": "blog-blogservice-slave",
+        "app": "blog"
+      }
+    }
+  },
+  "labels": {
+    "name": "blog-frontend"
+  }
+}
