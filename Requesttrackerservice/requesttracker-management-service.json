@@ -1,0 +1,14 @@
+{
+  "id": "requesttracker-mgmt",
+  "apiVersion": "v1beta1",
+  "kind": "Service",
+  "port": 9993,
+  "containerPort": 9990,
+  "publicIPs": ["104.167.111.144"],
+  "labels": {
+    "name": "requesttracker-mgmt"
+  },
+  "selector": {
+    "name": "requesttracker"
+  }
+}

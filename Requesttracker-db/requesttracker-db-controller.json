@@ -1,0 +1,53 @@
+{
+  "id": "requesttracker-db-controller",
+  "kind": "ReplicationController",
+  "apiVersion": "v1beta1",
+  "desiredState": {
+    "replicas": 1,
+    "replicaSelector": {"name": "requesttracker-db"},
+    "podTemplate": {
+      "desiredState": {
+        "manifest": {
+          "version": "v1beta1",
+          "id": "requesttracker-db",
+          "containers": [
+            {
+              "name": "requesttracker-db",
+              "image": "postgres",
+              "volumeMounts": [
+                {
+                  "name": "requesttracker-db-persistent",
+                  "mountPath": "/var/lib/postgresql/data"
+                }
+              ],
+              "ports": [
+                {
+                  "containerPort": 5432
+                }
+              ],
+              "env": [
+                {
+                  "name": "POSTGRES_PASSWORD",
+                  "value": "postgres"
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "requesttracker-db-persistent",
+              "source": {"hostDir": {"path": "/home/user/static-volumes/requesttracker-db"}}
+            }
+          ]
+        }
+      },
+      "labels": {
+        "name": "requesttracker-db",
+        "app": "requesttracker"
+      }
+    }
+  },
+  "labels": {
+    "name": "requesttracker-db"
+  }
+}

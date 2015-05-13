@@ -1,0 +1,13 @@
+{
+  "id": "requesttracker-db",
+  "apiVersion": "v1beta1",
+  "kind": "Service",
+  "port": 5433,
+  "labels": {
+    "name": "requesttracker-db"
+  },
+  "selector": {
+    "name": "requesttracker-db"
+  },
+  "containerPort": 5432
+}

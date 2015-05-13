@@ -1,0 +1,83 @@
+{
+  "id": "requesttracker-controller",
+  "apiVersion": "v1beta1",
+  "kind": "ReplicationController",
+  "desiredState": {
+    "replicas": 1,
+    "replicaSelector": {
+      "name": "requesttracker"
+    },
+    "podTemplate": {
+      "desiredState": {
+        "manifest": {
+          "id": "requesttracker",
+          "version": "v1beta1",
+          "containers": [
+            {
+              "name": "requesttracker",
+              "image": "wildfly",
+              "volumeMounts": [
+                {
+                  "name": "requesttracker-deployment-persistent",
+                  "mountPath": "/opt/jboss/wildfly/standalone/deployments"
+                },
+                {
+                  "name": "requesttracker-configuration-persistent",
+                  "mountPath": "/opt/jboss/wildfly/standalone/configuration"
+                },
+                {
+                  "name": "requesttracker-modules-persistent",
+                  "mountPath": "/opt/jboss/wildfly/modules"
+                }
+              ],
+              "ports": [
+                {
+                  "name": "app-port",
+                  "containerPort": 8080
+                },
+                {
+                  "name": "management-port",
+                  "containerPort": 9990
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "requesttracker-deployment-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/requesttracker-deployment"
+                }
+              }
+            },
+            {
+              "name": "requesttracker-configuration-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/requesttracker-configuration"
+                }
+              }
+            },
+            {
+              "name": "requesttracker-modules-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/requesttracker-modules"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "labels": {
+        "name": "requesttracker",
+        "uses": "requesttracker-db",
+        "app": "requesttracker"
+      }
+    }
+  },
+  "labels": {
+    "name": "requesttracker"
+  }
+}
