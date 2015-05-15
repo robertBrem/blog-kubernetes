@@ -1,0 +1,55 @@
+{
+  "id": "requesttracker-frontend-controller",
+  "apiVersion": "v1beta1",
+  "kind": "ReplicationController",
+  "desiredState": {
+    "replicas": 1,
+    "replicaSelector": {
+      "name": "requesttracker-frontend"
+    },
+    "podTemplate": {
+      "desiredState": {
+        "manifest": {
+          "id": "requesttracker-frontend",
+          "version": "v1beta1",
+          "containers": [
+            {
+              "name": "requesttracker-frontend",
+              "image": "bower_node",
+              "volumeMounts": [
+                {
+                  "name": "requesttracker-frontend-app-persistent",
+                  "mountPath": "/usr/src/app"
+                }
+              ],
+              "ports": [
+                {
+                  "name": "app-port",
+                  "containerPort": 8000
+                }
+              ]
+            }
+          ],
+          "volumes": [
+            {
+              "name": "requesttracker-frontend-app-persistent",
+              "source": {
+                "hostDir": {
+                  "path": "/home/user/static-volumes/requesttracker-frontend-app"
+                }
+              }
+            }
+          ]
+        }
+      },
+      "labels": {
+        "name": "requesttracker-frontend",
+        "uses": "requesttracker",
+        "app": "requesttracker"
+      }
+    }
+  },
+  "labels": {
+    "name": "requesttracker-frontend"
+  }
+}

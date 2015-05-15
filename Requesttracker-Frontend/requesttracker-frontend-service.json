@@ -1,0 +1,14 @@
+{
+  "id": "requesttracker-frontend",
+  "apiVersion": "v1beta1",
+  "kind": "Service",
+  "port": 8000,
+  "containerPort": 8000,
+  "publicIPs": ["104.167.115.229"],
+  "labels": {
+    "name": "requesttracker-frontend"
+  },
+  "selector": {
+    "name": "requesttracker-frontend"
+  }
+}
